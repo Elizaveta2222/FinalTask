@@ -29,7 +29,7 @@ namespace BusinessLogic.Models
         {
             modelBuilder.Entity<Homework>().HasAlternateKey(u => new { u.Lection });
             modelBuilder.Entity<Lection>().HasAlternateKey(u => new { u.Teacher });
-            modelBuilder.Entity<VisitJournal>().HasAlternateKey(u => new { u.Students, u.Lections });
+            modelBuilder.Entity<VisitJournal>().HasAlternateKey(u => new { u.Student, u.Lection });
             modelBuilder.Entity<Student>().HasAlternateKey(u => new { u.LecGroup });
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

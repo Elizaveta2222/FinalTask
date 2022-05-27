@@ -20,7 +20,7 @@ namespace BusinessLogic.Models
             E = 1,
             Absence = -1
         }
-        public List<Lection> Lections { get; set; } = new(); //связь с т студенты (многие ко одному)
-        public List<Student> Students { get; set; } = new(); //связь с т студенты (многие ко одному)
+        public Lection Lection{ get; set; } //связь с т студенты (многие ко одному)
+        public Student Student { get; set; }  //связь с т студенты (многие ко одному)
     }
 }

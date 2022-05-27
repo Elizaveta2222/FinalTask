@@ -9,7 +9,7 @@ namespace BusinessLogic.Repositories
 {
     public interface IObservable<TypeDefinition> // издатель
     {
-        void Notify(TypeDefinition data, IObserver<TypeDefinition> observer); // уведомление одного подписчика
+        void Notify(TypeDefinition data, IObserver<TypeDefinition> student, IObserver<TypeDefinition> teacher); // уведомление одного подписчика
 
         void Subscribe(IObserver<TypeDefinition> observer); //подписка
         void Unsubscribe(IObserver<TypeDefinition> observer); //отписка

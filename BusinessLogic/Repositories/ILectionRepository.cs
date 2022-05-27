@@ -7,7 +7,7 @@ using BusinessLogic.Models;
 
 namespace BusinessLogic.Repositories
 {
-    interface ILectionRepository : IRepository<Lection> 
+    public interface ILectionRepository : IRepository<Lection> 
     {
 
     }

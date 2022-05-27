@@ -7,7 +7,7 @@ using BusinessLogic.Models;
 
 namespace BusinessLogic.Repositories
 {
-    interface IRepository<T> : IDisposable
+    public interface IRepository<T> 
             where T : class
     {
         IEnumerable<T> GetObjectList(); // получение всех объектов
