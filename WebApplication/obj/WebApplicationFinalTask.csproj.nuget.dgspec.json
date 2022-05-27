@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Пользователь\\source\\repos\\BusinessLogic\\WebApplication\\WebApplication.csproj": {}
+    "C:\\Users\\Пользователь\\source\\repos\\BusinessLogic\\WebApplication\\WebApplicationFinalTask.csproj": {}
   },
   "projects": {
     "C:\\Users\\Пользователь\\source\\repos\\BusinessLogic\\BusinessLogic\\BusinessLogic.csproj": {
@@ -72,12 +72,12 @@
         }
       }
     },
-    "C:\\Users\\Пользователь\\source\\repos\\BusinessLogic\\WebApplication\\WebApplication.csproj": {
+    "C:\\Users\\Пользователь\\source\\repos\\BusinessLogic\\WebApplication\\WebApplicationFinalTask.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Пользователь\\source\\repos\\BusinessLogic\\WebApplication\\WebApplication.csproj",
-        "projectName": "WebApplication",
-        "projectPath": "C:\\Users\\Пользователь\\source\\repos\\BusinessLogic\\WebApplication\\WebApplication.csproj",
+        "projectUniqueName": "C:\\Users\\Пользователь\\source\\repos\\BusinessLogic\\WebApplication\\WebApplicationFinalTask.csproj",
+        "projectName": "WebApplicationFinalTask",
+        "projectPath": "C:\\Users\\Пользователь\\source\\repos\\BusinessLogic\\WebApplication\\WebApplicationFinalTask.csproj",
         "packagesPath": "C:\\Users\\Пользователь\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Пользователь\\source\\repos\\BusinessLogic\\WebApplication\\obj\\",
         "projectStyle": "PackageReference",
