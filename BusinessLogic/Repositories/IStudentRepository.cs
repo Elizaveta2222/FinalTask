@@ -7,7 +7,7 @@ using BusinessLogic.Models;
 
 namespace BusinessLogic.Repositories
 {
-    interface IStudentRepository: IRepository<Student>, IObserver<string>
+    public interface IStudentRepository: IRepository<Student>
     {
 
     }

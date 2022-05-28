@@ -7,7 +7,7 @@ using BusinessLogic.Models;
 
 namespace BusinessLogic.Repositories
 {
-    interface ILecGroupRepository : IRepository<LecGroup>
+    public interface ILecGroupRepository : IRepository<LecGroup>
     {
 
     }

@@ -9,6 +9,6 @@ namespace BusinessLogic.Repositories
 {
     public interface IObserver<TypeDefinition> // подписчик
     {
-        void Update(TypeDefinition data); //получение данных от издателя
+        string GetNotification(TypeDefinition data); //получение данных от издателя
     }
 }
