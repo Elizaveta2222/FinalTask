@@ -10,7 +10,6 @@ namespace BusinessLogic.Models
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        public int LectionId { get; set; } //связь с т Лекции
         public Lection Lection { get; set; }
     }
 }
