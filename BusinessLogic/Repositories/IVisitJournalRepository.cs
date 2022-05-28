@@ -10,5 +10,6 @@ namespace BusinessLogic.Repositories
     public interface IVisitJournalRepository : IRepository<VisitJournal>
     {
         void CheckAbsence();  // проверка прогулов
+        void CheckMarks();
     }
 }

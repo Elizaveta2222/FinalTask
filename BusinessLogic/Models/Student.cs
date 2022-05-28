@@ -14,5 +14,7 @@ namespace BusinessLogic.Models
         public List<VisitJournal> VisitJournals { get; set; } = new(); //связь с т VJ (многие ко одному)
         public int LecGroupId { get; set; } //связь с т группой
         public LecGroup LecGroup { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
     }
 }
