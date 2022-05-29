@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Models;
 using BusinessLogic.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplicationFinalTask.Models
 {
@@ -26,7 +27,7 @@ namespace WebApplicationFinalTask.Models
 
         public IEnumerable<VisitJournal> GetObjectList()
         {
-            var vj = db.VisitJournals.ToList();
+            var vj = db.VisitJournals.Include(vj=>vj.Lection).Include(vj=>vj.Student).ToList();
             return vj;
         }
 
