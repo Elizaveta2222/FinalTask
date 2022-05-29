@@ -105,6 +105,7 @@ namespace WebApplicationFinalTask.Controllers
         public IActionResult CreateStudent(Student student)
         {
             student.LecGroup = db.LecGroups.Where(a => a.Id == student.LecGroup.Id).FirstOrDefault();
+            student.LecGroupId=student.LecGroup.Id;
             studentRepository.Update(student);
             studentRepository.Save();
             return RedirectToAction("Index");
