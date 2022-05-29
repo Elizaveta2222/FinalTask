@@ -85,11 +85,13 @@ namespace WebApplicationFinalTask.Controllers
         public IActionResult CreateLection()
         {
             Lection lection = new Lection();
+            ViewBag.Teachers = new SelectList(teacherRepository.GetObjectList(), "Id", "Name"+"Surname");
             return View(lection);
         }
         [HttpPost]
         public IActionResult CreateLection(Lection lection)
         {
+
             lectionRepository.Update(lection);
             lectionRepository.Save();
             return RedirectToAction("Index");
