@@ -14,17 +14,17 @@
     </tr>
   </thead>
   <tbody>
-      @foreach(var student in Model){
+      @foreach(var lecgroup in Model){
        <tr>
-      <th scope="row">@student.Id</th>
-      <td>@student.Number</td>
-      <td>@Html.ActionLink("Изменить", "ChangeLection", student)</td>
-      <td>@Html.ActionLink("Удалить", "DeleteLection", student)</td>
+      <th scope="row">@lecgroup.Id</th>
+      <td>@lecgroup.Number</td>
+      <td>@Html.ActionLink("Изменить", "ChangeLecGroup", lecgroup)</td>
+      <td>@Html.ActionLink("Удалить", "DeleteLecGroup", lecgroup)</td>
     </tr>
       }
   </tbody>
 </table>
   <div class="band-list text-light">
-    <a class="btn btn-outline-primary" asp-action="CreateStudent">Добавить нового студента</a>
+    <a class="btn btn-outline-primary" asp-action="CreateLecGroup">Добавить новую группу</a>
  </div>
 </div>
