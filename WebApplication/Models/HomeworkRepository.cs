@@ -29,7 +29,6 @@ namespace WebApplicationFinalTask.Models
             var homeworks=db.Homeworks.Include(h => h.Lection).ToList();
             return homeworks;
         }
-
         public void Save()
         {
             db.SaveChanges();
