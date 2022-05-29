@@ -12,5 +12,6 @@ namespace BusinessLogic.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        public List<Lection> Lections { get; set; } = new(); //связь с т Лекции (многие ко многим)
     }
 }

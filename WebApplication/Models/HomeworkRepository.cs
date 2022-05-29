@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Models;
 using BusinessLogic.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApplicationFinalTask.Models
 {
@@ -25,7 +26,7 @@ namespace WebApplicationFinalTask.Models
 
         public IEnumerable<Homework> GetObjectList()
         {
-            var homeworks=db.Homeworks.ToList();
+            var homeworks=db.Homeworks.Include(h => h.Lection).ToList();
             return homeworks;
         }
 

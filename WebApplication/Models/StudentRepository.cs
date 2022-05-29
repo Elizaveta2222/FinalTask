@@ -1,5 +1,7 @@
 ﻿using BusinessLogic.Models;
 using BusinessLogic.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 namespace WebApplicationFinalTask.Models
 {
     public class StudentRepository : IStudentRepository
@@ -24,7 +26,7 @@ namespace WebApplicationFinalTask.Models
 
         public IEnumerable<Student> GetObjectList()
         {
-            var students = db.Students.ToList();
+            var students = db.Students.Include(s => s.LecGroup).ToList();
             return students;
         }
 
