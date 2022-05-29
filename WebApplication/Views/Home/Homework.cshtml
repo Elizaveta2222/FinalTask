@@ -1,0 +1,35 @@
+﻿@model List<BusinessLogic.Models.Homework>;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Домашние задания</h1>
+    <table class="table mt-4">
+  <thead class="thead-dark bg-primary text-light">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Описание</th>
+      <th scope="col">Дата лекции</th>
+      <th scope="col">Имя преподавателя</th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach(var homework in Model){
+       <tr>
+      <th scope="row">@homework.Id</th>
+      <td>@homework.Description</td>
+      <td>@homework.Lection.Id</td>
+      <td>@homework.Lection.Teacher.Name @homework.Lection.Teacher.Surname</td>      
+      <td>@Html.ActionLink("Изменить", "UpdateHomework", homework)</td>
+      <td>@Html.ActionLink("Удалить", "DeleteHomework", homework)</td>
+    </tr>
+      }
+  </tbody>
+</table>
+  <div class="band-list text-light">
+    <a class="btn btn-outline-primary" asp-action="CreateHomework">Добавить новоe задание</a>
+    <a class="btn btn-outline-primary" asp-action="Index">Вернуться на главную</a>
+
+ </div>
+</div>

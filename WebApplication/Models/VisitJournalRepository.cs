@@ -6,11 +6,19 @@ namespace WebApplicationFinalTask.Models
 {
     public class VisitJournalRepository : IVisitJournalRepository
     {
-        private ILogger<VisitJournalRepository> logger;
+        private readonly ILogger<VisitJournalRepository> logger;
+
+        public VisitJournalRepository(ILogger<VisitJournalRepository> logger)
+        {
+            this.logger = logger;
+        }
+
         private ApplicationContext db = new ApplicationContext();
+
         public void Create(VisitJournal vj)
         {
-            db.VisitJournals.Add(vj);
+            db.VisitJournals.Update(vj);
+            db.SaveChanges();
         }
 
         public void Delete(int id)
@@ -35,52 +43,67 @@ namespace WebApplicationFinalTask.Models
         {
             db.SaveChanges();
             CheckAbsence();
+            CheckMarks();
         }
 
         public void Update(VisitJournal vj)
         {
-            db.VisitJournals.Update(vj);
+            var last = db.VisitJournals.Where(j => j.Id == vj.Id).Include(j => j.Student).Include(j => j.Lection).FirstOrDefault();
+            last.Mark = vj.Mark;
+            db.VisitJournals.Update(last);
+            db.SaveChanges();
         }
         public void CheckAbsence()
         {
-            var attendances = db.VisitJournals.Where(m => m.Mark == VisitJournal.Marks.Absence).GroupBy(a => new {a.Student,a.Lection.Subject});
-            foreach(var attendance in attendances)
+            var students=db.VisitJournals.Select(j=>j.Student.Id).Distinct().ToList();
+            foreach(var student in students)
             {
-                if(attendance.Count() > 3)
+                var subj=db.VisitJournals.Where(j => j.Student.Id==student).Select(j=>j.Lection.Subject).Distinct().ToList();
+                foreach (var sub in subj)
                 {
-                    Student s = attendance.First().Student;
-                    Lection l = attendance.First().Lection;
-                    string studmess = "Вы пропустили больше трех занятий по предмету " + l.Subject;
-                    string teachmess = "Студент " + s.Name + " " + s.Surname + " пропустил более трех занятий по вашему предмету";
-                    logger.LogInformation("\nEmail: {ST}\n{t}\n", s.Email, studmess);
-                    logger.LogInformation("\nEmail: {ST}\n{t}\n", l.Teacher.Email, teachmess);
+                    var attendance=db.VisitJournals.Where(j=>j.Student.Id==student).Where(j=>j.Lection.Subject==sub).Where(j=>j.Mark==VisitJournal.Marks.Absence).Count();
+                    if (attendance >= 3)
+                    {
+                        Student s=db.Students.Where(s=>s.Id==student).First();
+                        Lection l = db.Lections.Where(l => l.Subject == sub).Include(l=>l.Teacher).First();
+                        string studmess = "Вы пропустили больше трех занятий по предмету " + l.Subject;
+                        string teachmess = "Студент " + s.Name + " " + s.Surname + " пропустил более трех занятий по вашему предмету";
+                        logger.LogInformation("\nEmail: {ST}\n{t}\n", s.Email, studmess);
+                        logger.LogInformation("\nEmail: {ST}\n{t}\n", l.Teacher.Email, teachmess);
+                    }
                 }
             }
+            
         }
         public void CheckMarks()
         {
-            var studLec = db.VisitJournals.GroupBy(a => new { a.Student, a.Lection.Subject });
-            foreach(var group in studLec)
+            var students = db.VisitJournals.Select(j => j.Student.Id).Distinct().ToList();
+            foreach (var student in students)
             {
-                var avgMark = 0;
-                foreach(var lec in group)
+                var subj = db.VisitJournals.Where(j => j.Student.Id == student).Select(j => j.Lection.Subject).Distinct().ToList();
+                foreach (var sub in subj)
                 {
-                    if ((int)lec.Mark == -1)
+                    var marks = db.VisitJournals.Where(j => j.Student.Id == student).Where(j => j.Lection.Subject == sub);
+                    var avr = 0;
+                    foreach (var mark in marks)
                     {
-                        avgMark += 0;
+                        if ((int)mark.Mark == -1)
+                        {
+                            avr += 0;
+                        }
+                        else
+                        {
+                            avr += (int)mark.Mark;
+                        }
                     }
-                    else
+                    avr = avr / sub.Count();
+                    if (avr < 4)
                     {
-                        avgMark+=(int)lec.Mark;
+                        Student s = db.Students.Where(s => s.Id == student).First();
+                        Lection l = db.Lections.Where(l => l.Subject == sub).First();
+                        string studmess = "Ваша оценка по предмету " + sub + " меньше 4";
+                        logger.LogInformation("\nPhone: {ST}\n{t}\n", s.Phone, studmess);
                     }
-                }
-                avgMark = avgMark / group.Count();
-                if (avgMark < 4)
-                {
-                    Student s = group.First().Student;
-                    Lection l = group.First().Lection;
-                    string studmess = "Ваша оценка по предмету " + l.Subject+" меньше 4";
-                    logger.LogInformation("\nPhone: {ST}\n{t}\n", s.Phone, studmess);
                 }
             }
         }

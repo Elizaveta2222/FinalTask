@@ -17,7 +17,7 @@
                 @Html.TextBoxFor(m => m.Subject, new { @class = "form-control"})
             </div>
     </div>
-        <div class="row g-3 align-items-center p-4">
+    <div class="row g-3 align-items-center p-4">
         <div class="col-3"></div>
             <div class="col-2">
                 <label for="inputName" class="col-form-label">Дата и время лекции</label>
@@ -33,15 +33,6 @@
             </div>
             <div class="col-3">
                 @Html.DropDownListFor(model => model.Teacher.Id, ViewBag.Teachers as SelectList, new { @class = "form-select" })
-            </div>
-    </div>
-   <div class="row g-3 align-items-center p-4">
-        <div class="col-3"></div>
-            <div class="col-2">
-                <label for="inputName" class="col-form-label">Задание</label>
-            </div>
-            <div class="col-3">
-                @Html.TextBoxFor(m => m.Homework.Description, new { @class = "form-control"})
             </div>
     </div>
     <button type="submit" class="btn btn-primary">Сохранить</button>

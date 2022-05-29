@@ -22,7 +22,7 @@
       <td>@teacher.Name</td>
       <td>@teacher.Surname</td>
       <td>@teacher.Email</td>
-      <td>@Html.ActionLink("Изменить", "ChangeTeacher", teacher)</td>
+      <td>@Html.ActionLink("Изменить", "UpdateTeacher", teacher)</td>
       <td>@Html.ActionLink("Удалить", "DeleteTeacher", teacher)</td>
     </tr>
       }
@@ -30,5 +30,6 @@
 </table>
   <div class="band-list text-light">
     <a class="btn btn-outline-primary" asp-action="CreateTeacher">Добавить нового преподавателя</a>
+    <a class="btn btn-outline-primary" asp-action="Index">Вернуться на главную</a>
  </div>
 </div>

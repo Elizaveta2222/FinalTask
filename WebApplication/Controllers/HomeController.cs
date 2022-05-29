@@ -1,6 +1,8 @@
 ﻿using BusinessLogic.Models;
+using BusinessLogic.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebApplicationFinalTask.Models;
 
@@ -9,19 +11,18 @@ namespace WebApplicationFinalTask.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationContext db;
-
-        public HomeController(ApplicationContext applicationContext)
-        {
-            db = applicationContext;
-        }
-
         HomeworkRepository homeworkRepository = new HomeworkRepository();
         LecGroupRepository lecGroupRepository = new LecGroupRepository();
         LectionRepository lectionRepository = new LectionRepository();
         StudentRepository studentRepository = new StudentRepository();
         TeacherRepository teacherRepository = new TeacherRepository();
-        VisitJournalRepository visitJournalRepository = new VisitJournalRepository();
-         
+        IVisitJournalRepository visitJournalRepository;
+
+        public HomeController(ApplicationContext applicationContext, IVisitJournalRepository visitJournalRepository)
+        {
+            db = applicationContext;
+            this.visitJournalRepository = visitJournalRepository;
+        } 
 
         public IActionResult Privacy()
         {
@@ -53,20 +54,22 @@ namespace WebApplicationFinalTask.Controllers
         {
             teacherRepository.Update(teacher);
             teacherRepository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("Teachers");
         }
         [HttpGet]
         public IActionResult CreateHomework()
         {
             Homework homework = new Homework();
+            ViewBag.Lections = new SelectList(lectionRepository.GetObjectList(), "Id", "Id");
             return View(homework);
         }
         [HttpPost]
         public IActionResult CreateHomework(Homework homework)
         {
+            homework.Lection = db.Lections.Where(a => a.Id == homework.Lection.Id).FirstOrDefault();
             homeworkRepository.Update(homework);
             homeworkRepository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("Homework");
         }
         [HttpGet]
         public IActionResult CreateLecGroup()
@@ -79,19 +82,20 @@ namespace WebApplicationFinalTask.Controllers
         {
             lecGroupRepository.Update(lecGroup);
             lecGroupRepository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("LecGroups");
         }
         [HttpGet]
         public IActionResult CreateLection()
         {
             Lection lection = new Lection();
-            ViewBag.Teachers = new SelectList(teacherRepository.GetObjectList(), "Id", "Name"+"Surname");
+            ViewBag.Teachers = new SelectList(teacherRepository.GetObjectList(), "Id", "Surname");
             return View(lection);
         }
         [HttpPost]
         public IActionResult CreateLection(Lection lection)
         {
-
+            lection.Teacher= db.Teachers.Where(a => a.Id == lection.Teacher.Id).FirstOrDefault();
+            lection.TeacherId=lection.Teacher.Id;
             lectionRepository.Update(lection);
             lectionRepository.Save();
             return RedirectToAction("Index");
@@ -110,23 +114,49 @@ namespace WebApplicationFinalTask.Controllers
             student.LecGroupId=student.LecGroup.Id;
             studentRepository.Update(student);
             studentRepository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("Students");
         }
         [HttpGet]
-        public IActionResult CreateVisitJournal()
+        public IActionResult CreateVisitJournal(Lection lection)
         {
-            VisitJournal visitJournal = new VisitJournal();
-            return View(visitJournal);
+            GroupsToLec gl= new GroupsToLec();
+            ViewBag.Lection = lection;
+            ViewBag.LecGroups = new SelectList(lecGroupRepository.GetObjectList(), "Id", "Number");
+            return View("CreateVisitJournal", gl);
         }
         [HttpPost]
-        public IActionResult CreateVisitJournal(VisitJournal visitJournal)
+        public IActionResult CreateVisitJournal(GroupsToLec lecGroup)
         {
-            visitJournalRepository.Update(visitJournal);
-            visitJournalRepository.Save();
+            var students=db.Students.Where(s=>s.LecGroupId==lecGroup.GroupId).ToList();
+            foreach(var student in students)
+            {
+                VisitJournal vj=new VisitJournal();
+                vj.Mark = VisitJournal.Marks.Absence;
+                vj.Student= db.Students.Where(s=>s.Id==student.Id).Include(s=>s.LecGroup).First();
+                vj.Lection = db.Lections.Where(l=>l.Id==lecGroup.LectionId).Include(l=>l.Teacher).First();
+                visitJournalRepository.Create(vj);
+            }
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult ChangeJournal(Lection lection)
+        {
+            var lec = lection;
+            List<VisitJournal> vjs=db.VisitJournals.Include(vj=>vj.Lection).Include(vj=>vj.Student).Where(vj=>vj.Lection.Id==lection.Id).ToList();
+            return View(vjs);
+        }
+        [HttpPost]
+        public IActionResult ChangeJournal(List<VisitJournal> vjs)
+        {
+            foreach(VisitJournal vj in vjs)
+            {
+                visitJournalRepository.Update(vj);
+            }
+            visitJournalRepository.Save();
 
+            return RedirectToAction("VisitJournals");
+        }
 
         //-----------------УДАЛЕНИЕ ОБЪЕКТОВ----------------------------
 
@@ -147,6 +177,11 @@ namespace WebApplicationFinalTask.Controllers
         [HttpGet]
         public IActionResult DeleteLection(Lection lection)
         {
+            var homeworks=db.Homeworks.Where(h=>h.Lection.Id==lection.Id).ToList();
+            foreach(var homework in homeworks)
+            {
+                homeworkRepository.Delete(homework.Id);
+            }
             lectionRepository.Delete(lection.Id);
             lectionRepository.Save();
             return RedirectToAction("Index");
@@ -161,6 +196,11 @@ namespace WebApplicationFinalTask.Controllers
         [HttpGet]
         public IActionResult DeleteTeacher(Teacher teacher)
         {
+            var lections=db.Lections.Where(l=>l.Teacher.Id==teacher.Id).ToList();
+            foreach (var lection in lections)
+            {
+                lectionRepository.Delete(lection.Id);
+            }
             teacherRepository.Delete(teacher.Id);
             teacherRepository.Save();
             return RedirectToAction("Index");
@@ -180,6 +220,8 @@ namespace WebApplicationFinalTask.Controllers
         [HttpGet]
         public IActionResult UpdateHomework(Homework homework)
         {
+            ViewBag.Lections = new SelectList(lectionRepository.GetObjectList(), "Id", "Id");
+            homework = db.Homeworks.Where(s => s.Id == homework.Id).First();
             return View("CreateHomework", homework);
         }
         [HttpGet]
@@ -190,11 +232,15 @@ namespace WebApplicationFinalTask.Controllers
         [HttpGet]
         public IActionResult UpdateLection(Lection lection)
         {
+            ViewBag.Teachers = new SelectList(teacherRepository.GetObjectList(), "Id", "Surname");
+            lection=db.Lections.Where(l=>l.Id==lection.Id).First();
             return View("CreateLection", lection);
         }
         [HttpGet]
         public IActionResult UpdateStudent(Student student)
         {
+            ViewBag.LecGroups = new SelectList(lecGroupRepository.GetObjectList(), "Id", "Number");
+            student=db.Students.Where(s=>s.Id == student.Id).First();
             return View("CreateStudent", student);
         }
         [HttpGet]
@@ -225,6 +271,16 @@ namespace WebApplicationFinalTask.Controllers
         {
             var teacher = teacherRepository.GetObjectList();
             return View(teacher);
+        }
+        public IActionResult Homework()
+        {
+            var homework = homeworkRepository.GetObjectList();
+            return View(homework);
+        }
+        public IActionResult VisitJournals()
+        {
+            var vjs = visitJournalRepository.GetObjectList();
+            return View(vjs);
         }
     }
 }

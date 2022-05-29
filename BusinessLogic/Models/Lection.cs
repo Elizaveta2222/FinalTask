@@ -13,8 +13,7 @@ namespace BusinessLogic.Models
         public DateTime Date { get; set; }
         public int TeacherId { get; set; }
         public Teacher Teacher { get; set; } //связь с т Преп
-        public int HomeworkId { get; set; }
-        public Homework Homework { get; set; } //связь с т Преп
+        public List<Homework> Homeworks { get; set; } = new(); //связь с т Преп
         public List<VisitJournal> VisitJournals { get; set; } = new(); //связь с т VJ (многие ко одному)
     }
 }

@@ -37,11 +37,5 @@ namespace WebApplicationFinalTask.Models
         {
             db.Teachers.Update(teacher);
         }
-
-        public string GetNotification(string nameStudent)
-        {
-            string notification = "Студент " + nameStudent + " пропустил 3 занятия по вашему предмету";
-            return notification;
-        }
     }
 }

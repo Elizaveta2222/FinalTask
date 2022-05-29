@@ -9,7 +9,7 @@ namespace BusinessLogic.Models
     public class VisitJournal
     {
         public int Id { get; set; }
-        public Marks Mark { get; set; }
+        public Marks? Mark { get; set; }
         public enum Marks : int
         {
             NoHomework = 0,

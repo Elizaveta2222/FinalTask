@@ -7,17 +7,22 @@
     <table class="table mt-4">
         <tr>
             <td>    
-                <a class="btn btn-outline-primary" asp-action="Teachers">Преподаватели</a>
+                <a class="btn btn-outline-primary" asp-action="Teachers">Список преподавателей</a>
             </td>
             <td>    
-                <a class="btn btn-outline-primary" asp-action="LecGroups">Группы</a>
+                <a class="btn btn-outline-primary" asp-action="LecGroups">Список групп</a>
             </td>
             <td>    
-                <a class="btn btn-outline-primary" asp-action="Students">Студенты</a>
+                <a class="btn btn-outline-primary" asp-action="Students">Список студентов</a>
             </td>
+            <td>    
+                <a class="btn btn-outline-primary" asp-action="Homework">Список дз</a>
+            </td>
+            
             <td>    
                 <a class="btn btn-outline-primary" asp-action="CreateLection">Добавить новую лекцию</a>
             </td>
+            
         </tr>
     </table>
     <h1 class="display-4">Лекции</h1>
@@ -37,13 +42,11 @@
       <th scope="row">@lection.Id</th>
       <td>@lection.Subject</td>
       <td>@lection.Date</td>
-                    @{
-                        var teacher = lection.Teacher.Name + lection.Teacher.Surname;
-                    }
-      <td>@teacher</td>
-      <td>@Html.ActionLink("Изменить", "ChangeLection", lection)</td>
+      <td>@lection.Teacher.Name @lection.Teacher.Surname</td>
+      <td>@Html.ActionLink("Изменить", "UpdateLection", lection)</td>
       <td>@Html.ActionLink("Удалить", "DeleteLection", lection)</td>
-      <td>@Html.ActionLink("Проставить успеваемость", "ChangeJournal", "Home", new { id = lection.Id }, null)</td>
+      <td>@Html.ActionLink("Добавить группу", "CreateVisitJournal", lection)</td>
+      <td>@Html.ActionLink("Проставить успеваемость", "ChangeJournal", lection)</td>
     </tr>
       }
   </tbody>

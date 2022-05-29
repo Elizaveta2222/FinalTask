@@ -1,10 +1,12 @@
 using BusinessLogic.Models;
-
+using BusinessLogic.Repositories;
+using WebApplicationFinalTask.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationContext>();
+builder.Services.AddScoped<IVisitJournalRepository, VisitJournalRepository>();
 
 var app = builder.Build();
 

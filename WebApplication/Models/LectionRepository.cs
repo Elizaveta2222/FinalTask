@@ -26,7 +26,7 @@ namespace WebApplicationFinalTask.Models
 
         public IEnumerable<Lection> GetObjectList()
         {
-            var lections = db.Lections.Include(l=>l.Homework).ToList();
+            var lections = db.Lections.Include(l=>l.Teacher).ToList();
             return lections;
         }
 

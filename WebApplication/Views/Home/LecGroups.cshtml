@@ -18,7 +18,7 @@
        <tr>
       <th scope="row">@lecgroup.Id</th>
       <td>@lecgroup.Number</td>
-      <td>@Html.ActionLink("Изменить", "ChangeLecGroup", lecgroup)</td>
+      <td>@Html.ActionLink("Изменить", "UpdateLecGroup", lecgroup)</td>
       <td>@Html.ActionLink("Удалить", "DeleteLecGroup", lecgroup)</td>
     </tr>
       }
@@ -26,5 +26,7 @@
 </table>
   <div class="band-list text-light">
     <a class="btn btn-outline-primary" asp-action="CreateLecGroup">Добавить новую группу</a>
+    <a class="btn btn-outline-primary" asp-action="Index">Вернуться на главную</a>
+
  </div>
 </div>

@@ -1,0 +1,33 @@
+﻿@model BusinessLogic.Models.Homework;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Задание</h1>
+    @using (Html.BeginForm("CreateHomework", "Home", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.Id)
+    
+       <div class="row g-3 align-items-center p-4">
+        <div class="col-3"></div>
+            <div class="col-2">
+                <label for="inputName" class="col-form-label">Задание</label>
+            </div>
+            <div class="col-3">
+                @Html.TextBoxFor(m => m.Description, new { @class = "form-control"})
+            </div>
+    </div>
+    <div class="row g-3 align-items-center p-4">
+        <div class="col-3 "></div>
+            <div class="col-2 ">
+                <label for="inputCon" class="col-form-label">Лекция</label>
+            </div>
+            <div class="col-3">
+                @Html.DropDownListFor(model => model.Lection.Id, ViewBag.Lections as SelectList, new { @class = "form-select" })
+            </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    }
+
+</div>
