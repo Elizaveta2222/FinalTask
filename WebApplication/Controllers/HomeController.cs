@@ -216,5 +216,15 @@ namespace WebApplicationFinalTask.Controllers
             var students = studentRepository.GetObjectList();
             return View(students);
         }
+        public IActionResult LecGroups()
+        {
+            var lecgroup = lecGroupRepository.GetObjectList();
+            return View(lecgroup);
+        }
+        public IActionResult Teachers()
+        {
+            var teacher = teacherRepository.GetObjectList();
+            return View(teacher);
+        }
     }
 }

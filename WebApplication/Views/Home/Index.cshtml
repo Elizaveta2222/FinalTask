@@ -28,7 +28,6 @@
       <th scope="col">Предмет</th>
       <th scope="col">Дата</th>
       <th scope="col">Преподаватель</th>
-      <th scope="col">ДЗ</th>
       <th scope="col">Управление</th>
     </tr>
   </thead>
@@ -38,8 +37,10 @@
       <th scope="row">@lection.Id</th>
       <td>@lection.Subject</td>
       <td>@lection.Date</td>
-      <td>@lection.Teacher</td>
-      <td>@lection.Homework</td>
+                    @{
+                        var teacher = lection.Teacher.Name + lection.Teacher.Surname;
+                    }
+      <td>@teacher</td>
       <td>@Html.ActionLink("Изменить", "ChangeLection", lection)</td>
       <td>@Html.ActionLink("Удалить", "DeleteLection", lection)</td>
       <td>@Html.ActionLink("Проставить успеваемость", "ChangeJournal", "Home", new { id = lection.Id }, null)</td>
