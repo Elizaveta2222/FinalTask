@@ -3,7 +3,9 @@ using BusinessLogic.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text;
 using WebApplicationFinalTask.Models;
 
 namespace WebApplicationFinalTask.Controllers
@@ -283,6 +285,19 @@ namespace WebApplicationFinalTask.Controllers
             visitJournalRepository.CheckMarks();
             visitJournalRepository.CheckAbsence();
             return View(vjs);
+        }
+        public IActionResult ReportServise()
+        {
+            var report = db.VisitJournals.Select(vj => new {vj.Student.Name,vj.Student.Surname,vj.Lection.Date,vj.Lection.Subject,vj.Mark}).ToList();
+            string reportSerializable = JsonConvert.SerializeObject(report, Formatting.Indented);
+            
+            byte[] reportSerialized = Encoding.Default.GetBytes(reportSerializable);
+
+            return new FileContentResult(reportSerialized, "application/octet-stream")
+            {
+                FileDownloadName = "serializedReport.txt"
+            };
+            
         }
     }
 }
