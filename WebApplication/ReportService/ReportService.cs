@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using WebApplicationFinalTask.ReportService;
 using System.IO;
 using BusinessLogic.Models;
@@ -28,3 +28,4 @@ namespace WebApplicationFinalTask.Report
         }
     }
 }
+*/

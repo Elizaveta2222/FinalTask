@@ -42,8 +42,6 @@ namespace WebApplicationFinalTask.Models
         public void Save()
         {
             db.SaveChanges();
-            CheckAbsence();
-            CheckMarks();
         }
 
         public void Update(VisitJournal vj)

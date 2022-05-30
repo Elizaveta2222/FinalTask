@@ -280,6 +280,8 @@ namespace WebApplicationFinalTask.Controllers
         public IActionResult VisitJournals()
         {
             var vjs = visitJournalRepository.GetObjectList();
+            visitJournalRepository.CheckMarks();
+            visitJournalRepository.CheckAbsence();
             return View(vjs);
         }
     }

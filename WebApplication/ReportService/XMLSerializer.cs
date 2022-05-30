@@ -1,4 +1,4 @@
-﻿using BusinessLogic.Models;
+﻿/*using BusinessLogic.Models;
 using System.Xml;
 using System.Xml.Serialization;
 using WebApplicationFinalTask.Report;
@@ -30,3 +30,4 @@ namespace WebApplicationFinalTask.ReportService
         }
     }
 }
+*/

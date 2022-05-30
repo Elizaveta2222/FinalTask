@@ -1,4 +1,4 @@
-﻿using BusinessLogic.Models;
+﻿/*using BusinessLogic.Models;
 
 namespace WebApplicationFinalTask.ReportService
 {
@@ -7,3 +7,4 @@ namespace WebApplicationFinalTask.ReportService
         public string Serialize(IEnumerable<VisitJournal> lectionJournal);
     }
 }
+*/

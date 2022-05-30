@@ -1,4 +1,4 @@
-﻿using BusinessLogic.Models;
+﻿/*using BusinessLogic.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text.Json;
@@ -15,3 +15,4 @@ namespace WebApplicationFinalTask.ReportService
         }
     }
 }
+*/
