@@ -165,14 +165,14 @@ namespace WebApplicationFinalTask.Controllers
         {
             homeworkRepository.Delete(homework.Id);
             homeworkRepository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("Homework");
         }
         [HttpGet]
         public IActionResult DeleteLecGroup(LecGroup lecGroup)
         {
             lecGroupRepository.Delete(lecGroup.Id);
             lecGroupRepository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("LecGroups");
         }
         [HttpGet]
         public IActionResult DeleteLection(Lection lection)
@@ -191,7 +191,7 @@ namespace WebApplicationFinalTask.Controllers
         {
             studentRepository.Delete(student.Id);
             studentRepository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("Students");
         }
         [HttpGet]
         public IActionResult DeleteTeacher(Teacher teacher)
@@ -203,7 +203,7 @@ namespace WebApplicationFinalTask.Controllers
             }
             teacherRepository.Delete(teacher.Id);
             teacherRepository.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("Teachers");
         }
         [HttpGet]
         public IActionResult DeleteVisitJournal(VisitJournal visitJournal)
