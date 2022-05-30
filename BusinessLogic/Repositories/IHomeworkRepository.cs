@@ -7,7 +7,7 @@ using BusinessLogic.Models;
 
 namespace BusinessLogic.Repositories
 {
-    interface IHomeworkRepository : IRepository<Homework>
+    public interface IHomeworkRepository : IRepository<Homework>
     {
 
     }

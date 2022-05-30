@@ -1,8 +1,60 @@
-﻿@{
+﻿@model List<BusinessLogic.Models.Lection>;
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <table class="table mt-4">
+        <tr>
+            <td>    
+                <a class="btn btn-outline-primary" asp-action="Teachers">Список преподавателей</a>
+            </td>
+            <td>    
+                <a class="btn btn-outline-primary" asp-action="LecGroups">Список групп</a>
+            </td>
+            <td>    
+                <a class="btn btn-outline-primary" asp-action="Students">Список студентов</a>
+            </td>
+            <td>    
+                <a class="btn btn-outline-primary" asp-action="Homework">Список дз</a>
+            </td>
+            <td>    
+                <a class="btn btn-outline-primary" asp-action="VisitJournals">Таблица посещаемости</a>
+            </td>
+            <td>    
+                <a class="btn btn-outline-primary" asp-action="CreateLection">Добавить новую лекцию</a>
+            </td>
+            
+        </tr>
+    </table>
+    <h1 class="display-4">Лекции</h1>
+    <table class="table mt-4">
+  <thead class="thead-dark bg-primary text-light">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Предмет</th>
+      <th scope="col">Дата</th>
+      <th scope="col">Преподаватель</th>
+      <th scope="col">Управление</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach(var lection in Model){
+       <tr>
+      <th scope="row">@lection.Id</th>
+      <td>@lection.Subject</td>
+      <td>@lection.Date</td>
+      <td>@lection.Teacher.Name @lection.Teacher.Surname</td>
+      <td>@Html.ActionLink("Изменить", "UpdateLection", lection)</td>
+      <td>@Html.ActionLink("Удалить", "DeleteLection", lection)</td>
+      <td>@Html.ActionLink("Добавить группу", "CreateVisitJournal", lection)</td>
+      <td>@Html.ActionLink("Проставить успеваемость", "ChangeJournal", lection)</td>
+    </tr>
+      }
+  </tbody>
+</table>
 </div>

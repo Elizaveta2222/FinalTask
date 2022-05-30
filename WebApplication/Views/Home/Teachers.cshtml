@@ -1,0 +1,36 @@
+﻿@model List<BusinessLogic.Models.Teacher>;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Преподаватели</h1>
+    <table class="table mt-4">
+  <thead class="thead-dark bg-primary text-light">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Имя</th>
+      <th scope="col">Фамилия</th>
+      <th scope="col">Email</th>
+      <th scope="col">Управление</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach(var teacher in Model){
+       <tr>
+      <th scope="row">@teacher.Id</th>
+      <td>@teacher.Name</td>
+      <td>@teacher.Surname</td>
+      <td>@teacher.Email</td>
+      <td>@Html.ActionLink("Изменить", "UpdateTeacher", teacher)</td>
+      <td>@Html.ActionLink("Удалить", "DeleteTeacher", teacher)</td>
+    </tr>
+      }
+  </tbody>
+</table>
+  <div class="band-list text-light">
+    <a class="btn btn-outline-primary" asp-action="CreateTeacher">Добавить нового преподавателя</a>
+    <a class="btn btn-outline-primary" asp-action="Index">Вернуться на главную</a>
+ </div>
+</div>

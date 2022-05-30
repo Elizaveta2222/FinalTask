@@ -7,8 +7,9 @@ using BusinessLogic.Models;
 
 namespace BusinessLogic.Repositories
 {
-    interface IVisitJournalRepository : IRepository<VisitJournal>, IObservable<string>
+    public interface IVisitJournalRepository : IRepository<VisitJournal>
     {
         void CheckAbsence();  // проверка прогулов
+        void CheckMarks();
     }
 }

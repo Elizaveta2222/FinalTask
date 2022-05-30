@@ -1,0 +1,41 @@
+﻿@model BusinessLogic.Models.Lection;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Лекция</h1>
+    @using (Html.BeginForm("CreateLection", "Home", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.Id)
+    <div class="row g-3 align-items-center p-4">
+        <div class="col-3"></div>
+            <div class="col-2">
+                <label for="inputName" class="col-form-label">Название предмета</label>
+            </div>
+            <div class="col-3">
+                @Html.TextBoxFor(m => m.Subject, new { @class = "form-control"})
+            </div>
+    </div>
+    <div class="row g-3 align-items-center p-4">
+        <div class="col-3"></div>
+            <div class="col-2">
+                <label for="inputName" class="col-form-label">Дата и время лекции</label>
+            </div>
+            <div class="col-3">
+                @Html.TextBoxFor(m => m.Date, new { type="date", @class = "form-control"})
+            </div>
+    </div>
+    <div class="row g-3 align-items-center p-4">
+        <div class="col-3 "></div>
+            <div class="col-2 ">
+                <label for="inputCon" class="col-form-label">Преподаватель</label>
+            </div>
+            <div class="col-3">
+                @Html.DropDownListFor(model => model.Teacher.Id, ViewBag.Teachers as SelectList, new { @class = "form-select" })
+            </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    }
+
+</div>
